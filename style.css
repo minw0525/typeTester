@@ -114,6 +114,11 @@ main{
 #userText{
     outline: none;
     word-break: break-word;
+    height: 100%; 
+}
+#userText > div{
+    font-size: inherit;
+    font-family: inherit;
 }
 [contentEditable]{
     -webkit-user-modify: read-write-plaintext-only;

@@ -115,8 +115,10 @@ class InputRange extends HTMLElement{
             input.max = this.max;
             input.step = this.step;
             input.value = this.default;
-            input.addEventListener('input', this.inputHandler.bind(this))
         }
+        this.inputRange.addEventListener('input', this.rangeInputHandler.bind(this))
+        this.inputText.addEventListener('input', this.textInputHandler.bind(this))
+        this.inputText.addEventListener('change', this.textChangeHandler.bind(this))
 
         this.snaps = [this.data.min, this.data.default, this.data.max]
         this.datalist.id = `${this.prop}Snaps`
@@ -138,7 +140,31 @@ class InputRange extends HTMLElement{
         this.controls.updateFontCSS()//this.prop,`${this.controls.currentState.basics[this.prop][0]}${this.controls.currentState.basics[this.prop][1]}`);
     }
 
-    inputHandler(ev){
+    rangeInputHandler(ev){
+        if (ev.target.value < this.min){
+            this.currentState[this.prop] = this.min
+        }else if (ev.target.value > this.max){
+            this.currentState[this.prop] = this.max
+        }else{
+            this.currentState[this.prop] = ev.target.value
+        }
+        this.updateState(this.prop, [ this.currentState[this.prop], this.unit??''])
+        this.updateUI()
+    }
+
+    textInputHandler(ev){
+        if (ev.target.value < this.min){
+            this.currentState[this.prop] = this.min
+        }else if (ev.target.value > this.max){
+            this.currentState[this.prop] = this.max
+        }else{
+            this.currentState[this.prop] = ev.target.value
+            this.updateState(this.prop, [ this.currentState[this.prop], this.unit??''])
+            this.updateUI()    
+        }
+    }
+
+    textChangeHandler(ev){
         if (ev.target.value < this.min){
             this.currentState[this.prop] = this.min
         }else if (ev.target.value > this.max){
@@ -216,11 +242,13 @@ class VariableInputRange extends HTMLElement{
             input.max = this.max;
             input.step = this.valueStep
             input.value = this.default;
-
-            input.addEventListener('input', this.inputHandler.bind(this))
             
             input.classList.add(`${this.prop}input`)
         }
+        this.inputRange.addEventListener('input', this.rangeInputHandler.bind(this))
+        this.inputText.addEventListener('input', this.textInputHandler.bind(this))
+        this.inputText.addEventListener('change', this.textChangeHandler.bind(this))
+
         this.snaps = [this.min, this.default, this.max]
         this.datalist.id = `${this.prop}Snaps`
         this.inputRange.setAttributes({'list':`${this.prop}Snaps`})
@@ -243,13 +271,40 @@ class VariableInputRange extends HTMLElement{
         }
         this.controls.updateVariationCSS(this.prop, this.controls.currentState.variations[this.prop]);
     }
-    inputHandler(ev){
+    rangeInputHandler(ev){
+        console.log(ev.target.value)
         if (ev.target.value < this.min){
             this.currentState[this.prop] = this.min
         }else if (ev.target.value > this.max){
             this.currentState[this.prop] = this.max
         }else{
-            this.currentState[this.prop] = parseFloat(ev.target.value)
+            this.currentState[this.prop] = parseFloat(ev.target.value||0)
+        }
+        // console.log(1, this.currentState[this.prop], 2, this.controls.currentState[this.prop])
+        this.updateState(this.prop, this.currentState[this.prop])
+        this.updateUI()
+    }
+    textInputHandler(ev){
+        console.log(ev.target.value)
+        if (ev.target.value < this.min){
+            this.currentState[this.prop] = this.min
+        }else if (ev.target.value > this.max){
+            this.currentState[this.prop] = this.max
+        }else{
+            this.currentState[this.prop] = parseFloat(ev.target.value||0)
+            this.updateState(this.prop, this.currentState[this.prop])
+            if (ev.target.value.at(-1) !== '.' || ev.target.value.match(/\./g).length>1) this.updateUI()
+        }
+        // console.log(1, this.currentState[this.prop], 2, this.controls.currentState[this.prop])
+    }
+    textChangeHandler(ev){
+        console.log(ev.target.value)
+        if (ev.target.value < this.min){
+            this.currentState[this.prop] = this.min
+        }else if (ev.target.value > this.max){
+            this.currentState[this.prop] = this.max
+        }else{
+            this.currentState[this.prop] = parseFloat(ev.target.value||0)
         }
         // console.log(1, this.currentState[this.prop], 2, this.controls.currentState[this.prop])
         this.updateState(this.prop, this.currentState[this.prop])
