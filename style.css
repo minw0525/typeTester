@@ -103,7 +103,6 @@ main{
     width: 100%;
     height: 100%;
     align-items: center;
-    padding: 30px;
     overflow: auto;
     flex: 1 1 calc(90vw - 200px);
     font-family: preview, sans-serif;
@@ -120,9 +119,11 @@ main{
         7 #000000; 
 }
 #userText{
+    padding: 30px;
+    width: 100%;
     outline: none;
     word-break: break-word;
-    height: 100%; 
+    overflow-y: auto;
     font-palette: --custom;
     font-palette: normal;
 }
