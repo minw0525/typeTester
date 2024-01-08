@@ -272,7 +272,6 @@ class VariableInputRange extends HTMLElement{
         this.controls.updateVariationCSS(this.prop, this.controls.currentState.variations[this.prop]);
     }
     rangeInputHandler(ev){
-        console.log(ev.target.value)
         if (ev.target.value < this.min){
             this.currentState[this.prop] = this.min
         }else if (ev.target.value > this.max){
@@ -285,7 +284,6 @@ class VariableInputRange extends HTMLElement{
         this.updateUI()
     }
     textInputHandler(ev){
-        console.log(ev.target.value)
         if (ev.target.value < this.min){
             this.currentState[this.prop] = this.min
         }else if (ev.target.value > this.max){
@@ -298,7 +296,6 @@ class VariableInputRange extends HTMLElement{
         // console.log(1, this.currentState[this.prop], 2, this.controls.currentState[this.prop])
     }
     textChangeHandler(ev){
-        console.log(ev.target.value)
         if (ev.target.value < this.min){
             this.currentState[this.prop] = this.min
         }else if (ev.target.value > this.max){

@@ -111,10 +111,20 @@ main{
     text-align: center;
     justify-content: center;
 }
+@font-palette-values --custom {
+    font-family: preview;
+    base-palette: 1;
+    override-colors:
+        0 #c1cbed,
+        1 #ff3a92,
+        7 #000000; 
+}
 #userText{
     outline: none;
     word-break: break-word;
     height: 100%; 
+    font-palette: --custom;
+    font-palette: normal;
 }
 #userText > div{
     font-size: inherit;
